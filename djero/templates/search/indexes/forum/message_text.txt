@@ -1,2 +1,0 @@
-{{ object.topic.title }}
-{{ object.text }}
