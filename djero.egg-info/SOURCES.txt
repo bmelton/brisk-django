@@ -23,8 +23,8 @@ djero/templates/forum/forum.html
 djero/templates/forum/index.html
 djero/templates/forum/reply.html
 djero/templates/forum/topic.html
-djero/templates/search/indexes/forum/message_text.txt
-djero/templates/search/indexes/forum/topic_text.txt
+djero/templates/search/indexes/djero/message_text.txt
+djero/templates/search/indexes/djero/topic_text.txt
 djero/templates/search/indexes/message/topic_text.txt
 djero/templatetags/__init__.py
 djero/templatetags/forum_tags.py
