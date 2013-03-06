@@ -1,4 +1,5 @@
 MANIFEST.in
+README.txt
 setup.py
 djero/__init__.py
 djero/admin.py

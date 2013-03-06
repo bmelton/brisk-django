@@ -79,7 +79,7 @@ def delete_topic(request, topic):
         message.active = False
         message.save()
     topic.save()
-    return HttpResponseRedirect(reverse('forum.views.topic', kwargs={
+    return HttpResponseRedirect(reverse('djero.views.topic', kwargs={
         'category'  : forum.category.slug,
         'forum'     : forum.slug,
         'topic'     : topic.slug,
@@ -119,7 +119,7 @@ def create_topic(request, forum):
                 topic.last_message = message
                 topic.save()
                 action.send(request.user, verb='created a topic', target=topic)
-                return HttpResponseRedirect(reverse('forum.views.topic', kwargs={
+                return HttpResponseRedirect(reverse('djero.views.topic', kwargs={
                     'category'  : forum.category.slug,
                     'forum'     : forum.slug,
                     'topic'     : topic.slug,
@@ -152,7 +152,7 @@ def reply(request, topic):
             message.topic.save()
 
             Topic.objects.filter(id=topic.id).update(reply_count=F('reply_count')+1)
-            return HttpResponseRedirect(reverse('forum.views.topic', kwargs={
+            return HttpResponseRedirect(reverse('djero.views.topic', kwargs={
                 'category'  : topic.forum.category.slug, 
                 'forum'     : topic.forum.slug, 
                 'topic'     : topic.slug
