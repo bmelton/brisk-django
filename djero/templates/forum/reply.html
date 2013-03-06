@@ -1,0 +1,12 @@
+{% extends "forum/base.html" %}
+
+{% block title %}Reply {% endblock %}
+
+{% block content %}
+    <h3>Reply to "{{ topic.title }}"</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ message_form }}
+        <input class="small button" type="submit" />
+    </form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "forum/base.html" %}
+
+{% block title %}{{ category.name }}{% endblock %}
+{% block section_title %}{{ category.name }}{% endblock %}
+
+{% block forum_content %}
+    {% for forum in forums %}
+        <div class="sixteen columns alpha omega">
+            <div class="one column alpha">
+                {{ forum.icon }}
+            </div>
+            <div class="fifteen columns omega">
+                <strong><a href="{% url forum_board_home category.slug forum.slug %}">{{ forum.name }}</a></strong>
+            </div>
+            {% if forum.moderator_set.all %}
+                <div class="fifteen columns omega">
+                    Moderators:
+                    {% for moderator in forum.moderator_set.all %}
+                        <a href="{% url userena_profile_detail moderator.user.username %}">{{ moderator }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="fifteen columns omega">
+                <div>{{ forum.description }}</div>
+                {% if not forloop.last %}
+                <hr />
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    <br />
+{% endblock %}

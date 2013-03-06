@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load forum_tags %}
+
+{% block title %}Forums{% endblock %}
+
+{% block content %}
+    <div class="large-12 columns">
+        <h2>Forums</h2>
+        {% for category in categories %}
+            {% if user|is_in_group_for_category:category %}
+                {% if user|can_see_category:category %}
+                    <div class="large-12 columns">
+                        <div class="large-2 small-12 columns" style="padding: 0 0 10px 0;">
+                            <strong><a style="color: black;" href="{% url forum_category_home category.slug %}">{{ category.name }}</a></strong>
+                        </div>
+                        <div class="large-10 small-12 columns">
+                            {% for forum in category.forum_set.all %}
+                                <div class="large-6 small-12 columns" style="padding: 0 10px 10px 0;">
+                                    <a href="{% url forum_board_home category.slug forum.slug %}">{{ forum.name }}</a>
+                                </div>
+                            {% endfor %}
+                            <br />
+                            <hr />
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

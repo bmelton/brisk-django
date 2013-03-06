@@ -1,0 +1,58 @@
+{% extends "forum/base.html" %}
+{% load humanize %}
+{% load forum_tags %}
+
+{% block title %}{{ forum.name }}{% endblock %}
+{% block section_title %}{{ forum.name }}{% endblock %}
+
+{% block forum_content %}
+    <a href="{% url forum_home %}">Forum Home</a>
+    <h2>{{ forum.name }}</h2>
+    <hr />
+    <a class="small button" style="margin-top: -35px; float: right;" href="{% url forum_create_topic forum.slug %}">New Topic</a><br />
+    {% for topic in topics %}
+        <div class="large-12 columns {% cycle 'even' 'odd' %} topic_row">
+            <div class="large-4 columns">
+                <a href="{% url forum_topic_home topic.category.slug topic.forum.slug topic.slug %}"> {{ topic.title }}</a>
+            </div>
+            <div class="large-4 columns">
+                by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a>, {{ topic.created|naturaltime }}
+            </div>
+            <div class="large-1 columns">
+                {{ topic.reply_count }}
+            </div>
+            <div class="large-1 columns">
+                {% if user|is_moderator_of:forum %}
+                    <a href="{% url forum_edit_topic topic.slug %}"><img style="max-width: 20px;" src="{{ STATIC_URL }}images/icons/gear.png" /></a>
+                {% elif user.is_superuser %}
+                    <a href="{% url forum_edit_topic topic.slug %}"><img style="max-width: 20px;" src="{{ STATIC_URL }}images/icons/gear.png" /></a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Sorry, no topics in here yet.</p>
+    {% endfor %}
+    <div>
+    {% if topics.has_other_pages %}
+        <div class="large-12 columns" style="text-align: right;">
+            <ul class="pagination" style="float: right;">
+            {% if topics.has_previous %}
+                <li class="arrow"><a href="?page={{ topics.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+
+            {% for page_num in paginator.page_range %}
+                {% ifequal page_num page %}
+                    <li class="current">{{ page_num }}</li>
+                {% else %}
+                    <li><a href="?page={{ page_num }}">{{ page_num }}</a>
+                {% endifequal %}
+            {% endfor %}<br />
+
+            {% if topics.has_next %}
+                <li class="arrow"><a href="?page={{ topics.next_page_number }}">&raquo;</a></li>
+            {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

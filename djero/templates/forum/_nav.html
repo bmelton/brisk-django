@@ -1,0 +1,11 @@
+<div class="sixteen columns alpha omega">
+    <a href="{% url forum_home %}">Forum Home</a>
+    {% if category %}<a href="{% url forum_category_home category.slug %}">{{ category.name }}</a>{% endif %}
+    {% if forum %}
+        > <a href="{% url forum_category_home forum.category.slug %}">{{ forum.category.name }}</a>
+    {% endif %}
+    {% if topic %}
+        > <a href="{% url forum_category_home topic.category.slug %}">{{ topic.category.name }}</a>
+        > <a href="{% url forum_home topic.category.slug topic.forum.slug %}">{{ topic.forum.name }}</a>
+    {% endif %}
+</div>

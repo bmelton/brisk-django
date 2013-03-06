@@ -1,0 +1,12 @@
+{% extends "forum/base.html" %}
+
+{% block title %}New Topic{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ topic_form }}
+        {{ message_form }}
+        <input class="small button" type="submit" />
+    </form>
+{% endblock %}

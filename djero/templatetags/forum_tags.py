@@ -1,7 +1,7 @@
 from django import template
 from django.core.urlresolvers import reverse
 
-from forum.models import Message, Topic, Category
+from models import Message, Topic, Category
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 import datetime
