@@ -1,4 +1,4 @@
-VERSION = (0, 0, 0, "a", 1)  # following PEP 386
+VERSION = (0, 0, 0, "a", 3)  # following PEP 386
 
 def get_version():
     version = "%s.%s" % (VERSION[0], VERSION[1])
