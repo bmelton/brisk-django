@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: djero
-Version: 0.0a2
+Version: 0.0a4
 Summary: Djero is a dumb Django forum app that sucks.
 Home-page: http://github.com/bmelton/djero/
 Author: Barry Melton
