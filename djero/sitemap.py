@@ -1,15 +1,15 @@
-from djig.models import Article
+from djero.models import Topic
 
 # TODO
 # This sucks, really.  But I'm not sure if I want to 
 # generate the sitemap based on popularity, or if I
 # want to limit these results, or what.
-class DjigSitemap(sitemaps.Sitemap):
+class DjeroSitemap(sitemaps.Sitemap):
     changefreq = "daily"
     priority   = 0.5
 
     def items(self):
-        return Article.objects.all()    
+        return Topic.objects.all()    
 
     def lastmod(self, obj):
         return obj.created
