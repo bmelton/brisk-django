@@ -125,7 +125,7 @@ class Message(models.Model):
         ordering = ['created']
 
     def __unicode__(self):  
-        return "%s : %s" % (self.user.username, self.topic.title)
+        return "%s / %s / %s" % (self.category.name, self.forum.name, self.topic.title)
 
     def save(self, *args, **kwargs):
         if not self.id:
