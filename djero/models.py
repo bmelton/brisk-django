@@ -134,3 +134,7 @@ class Message(models.Model):
         else:
             self.modified = datetime.datetime.now()
         super(Message, self).save(*args, **kwargs)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('forum_topic_home', [self.category.slug, self.forum.slug, self.topic.slug])
