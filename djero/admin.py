@@ -1,7 +1,8 @@
 from django.contrib import admin
+from guardian.admin import GuardedModelAdmin
 from models import *
 
-class ForumAdmin(admin.ModelAdmin):
+class ForumAdmin(GuardedModelAdmin):
     class Media:
         js = (
             'admin/js/admin_list_reorder.js',
@@ -14,7 +15,8 @@ class ForumAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ['title',]
 
-class CategoryAdmin(admin.ModelAdmin):
+# class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(GuardedModelAdmin):
     def changelist_view(self, request, extra_context=None):
         test = request.META.get('HTTP_REFERER')
         # test = request.META['HTTP_REFERER'].split(request.META['PATH_INFO'])
@@ -53,7 +55,7 @@ class MessageAdmin(admin.ModelAdmin):
     list_display_links = ('text',)
     search_fields = ['user__username','text',]
 
-class TopicAdmin(admin.ModelAdmin):
+class TopicAdmin(GuardedModelAdmin):
     model = Topic
     list_display = ('category', 'forum', 'user', 'message','created','modified',)
     list_filter = ('category', 'forum', 'user', )

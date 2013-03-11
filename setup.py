@@ -110,7 +110,9 @@ setup(
     packages = find_packages(),
     include_package_data=True,
     install_requires = [
-        # 'Django==1.4',
+        'Django>=1.4',
+        'django-guardian',
+        'django-activity-stream',
     ],
     classifiers = [
         'Development Status :: 3 - Alpha',

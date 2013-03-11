@@ -3,7 +3,7 @@ from managers import ForumManager
 from django.contrib.auth.models import User, Group
 from uuslug import uuslug
 import datetime
-from guardian.shortcuts import get_perms
+from guardian.shortcuts import get_perms, get_groups_with_perms
 
 class Category(models.Model):
     groups              = models.ManyToManyField(Group, null=True, blank=True)
@@ -34,6 +34,14 @@ class Category(models.Model):
             self.slug = uuslug(self.name, instance=self)
         super(Category, self).save(*args, **kwargs)
 
+    def get_allowed_groups(self):
+        allowed_groups = []
+        groups = get_groups_with_perms(self, attach_perms=True)
+        for group in groups.keys():
+            if "view_category" in groups[group]:
+                allowed_groups.append(group)
+        return allowed_groups
+
 class Forum(models.Model):
     groups              = models.ManyToManyField(Group, null=True, blank=True)
     name                = models.CharField(max_length=255, null=False, blank=False)
@@ -50,6 +58,17 @@ class Forum(models.Model):
 
     class Meta():
         ordering = ['position']
+        permissions = (
+            ('view_forum', 'Can view forum'),
+        )
+
+    def get_allowed_groups(self):
+        allowed_groups = []
+        groups = get_groups_with_perms(self, attach_perms=True)
+        for group in groups.keys():
+            if "view_forum" in groups[group]:
+                allowed_groups.append(group)
+        return allowed_groups
 
     def __unicode__(self):
         return self.name
@@ -102,6 +121,19 @@ class Topic(models.Model):
     class Meta():
         get_latest_by   = 'created'
         ordering        = ['created']
+        permissions = (
+            ('view_topic', 'Can view topic'),
+        )
+
+    def get_allowed_groups(self):
+        allowed_groups = []
+        groups = get_groups_with_perms(self, attach_perms=True)
+        for group in groups.keys():
+            if "view_topic" in groups[group]:
+                allowed_groups.append(group)
+        print allowed_groups
+        return allowed_groups
+
 
     def __unicode__(self):
         return self.title

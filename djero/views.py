@@ -53,6 +53,9 @@ def forum(request, category, forum):
     })
 
 def topic(request, category, forum, topic):
+    topic_form      = TopicForm()
+    message_form    = MessageForm()
+
     topic = get_object_or_404(Topic, slug=topic)
     messages = Message.objects.filter(topic=topic)[1:]
     messageset = Message.objects.filter(topic=topic)[1:]
@@ -72,6 +75,8 @@ def topic(request, category, forum, topic):
         "messages"      : messages,
         "messageset"    : messageset,
         "paginator"     : paginator,
+        "topic_form"    : topic_form,
+        "message_form"  : message_form,
     })
 
 def delete_topic(request, topic):

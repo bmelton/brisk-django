@@ -1,11 +1,13 @@
 import datetime
 from haystack import indexes
 from models import Topic, Message
+from guardian.shortcuts import get_groups_with_perms
 
 class TopicIndex(indexes.SearchIndex, indexes.Indexable):
     text        = indexes.CharField(document=True, use_template=True)
     author      = indexes.CharField(model_attr='user')
     created     = indexes.DateTimeField(model_attr='created')
+    group_access= indexes.MultiValueField()
 
     def get_model(self):
         return Topic
@@ -15,6 +17,18 @@ class TopicIndex(indexes.SearchIndex, indexes.Indexable):
 
     def get_updated_field(self):
         return "modified"
+
+    def prepare_group_access(self, obj):
+        print "PREPARING GROUP ACCESS"
+        groups = []
+        groups_with_access = obj.get_allowed_groups()
+        print obj.get_allowed_groups()
+        for group in groups_with_access:
+            print group.id
+            groups.append(group.id)
+        print groups
+        print "FINISHED PREPARING GROUP ACCESS"
+        return groups
 
 class MessageIndex(indexes.SearchIndex, indexes.Indexable):
     text        = indexes.CharField(document=True, use_template=True)

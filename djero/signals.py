@@ -4,6 +4,7 @@ logger = logging.getLogger('djero')
 from django.core.signals import request_finished
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from guardian.models import *
 
 import datetime
 from django.dispatch.dispatcher import Signal
@@ -19,6 +20,21 @@ def listen_to_article(sender, instance, created, **kwargs):
         logger.debug("User %s created." % instance.username)
         instance.groups.add(everybody_group.id)
         instance.groups.add(registered_users_group.id)
+
+
+@receiver(post_save, sender=BaseObjectPermission)
+def listen_to_bop(sender, instance, created, **kwargs):
+    logger.debug("BaseObjectPermission")
+
+@receiver(post_save, sender=UserObjectPermission)
+def listen_to_uop(sender, instance, created, **kwargs):
+    logger.debug("UserObjectPermission")
+
+@receiver(post_save, sender=GroupObjectPermission)
+def listen_to_gop(sender, instance, created, **kwargs):
+    logger.debug(dir(instance))
+    logger.debug("GroupObjectPermission")
+
 
 """
 @receiver(post_save, sender=Vote, dispatch_uid='listen_to_votes')

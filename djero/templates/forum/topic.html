@@ -46,6 +46,16 @@
         {% empty %}
             <p>Sorry, no messages in here yet.</p>
         {% endfor %}
+        {% if user.is_authenticated %}
+        <div class="large-12 columns">
+            <form method="post">
+                {% csrf_token %}        
+                {{ topic_form }}
+                {{ message_form }}
+                <input class="small button" type="submit" />    
+            </form>
+        </div>
+        {% endif %}
         <div>
             {% if messages.has_other_pages %}
                 <div class="large-12 columns" style="text-align: right;">
