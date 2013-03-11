@@ -9,12 +9,16 @@ import datetime
 from django.dispatch.dispatcher import Signal
 from voting.models import *
 from django.contrib.auth.models import User, Group
+everybody_group = Group.objects.get(name='Everybody')
+registered_users_group = Group.objects.get(name='Registered Users')
 
 # Listen for user creation, then add to the everybody Group
 @receiver(post_save, sender=User, dispatch_uid='listen_to_article')
 def listen_to_article(sender, instance, created, **kwargs):
     if created:
-        instance.groups.add(name="Everybody")
+        logger.debug("User %s created." % instance.username)
+        instance.groups.add(everybody_group.id)
+        instance.groups.add(registered_users_group.id)
 
 """
 @receiver(post_save, sender=Vote, dispatch_uid='listen_to_votes')

@@ -3,6 +3,7 @@ from managers import ForumManager
 from django.contrib.auth.models import User, Group
 from uuslug import uuslug
 import datetime
+from guardian.shortcuts import get_perms
 
 class Category(models.Model):
     groups              = models.ManyToManyField(Group, null=True, blank=True)
@@ -18,6 +19,12 @@ class Category(models.Model):
     class Meta():
         ordering = ['position']
         verbose_name_plural = "Categories"
+        permissions = (
+            ('view_category', 'Can view category'),
+        )
+
+    def can_view_category(self, user):
+        return False
 
     def __unicode__(self):
         return self.name

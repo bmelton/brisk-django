@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 admin.autodiscover()
+import signals
 
 urlpatterns = patterns('',
     url(r'^$',                                          'djero.views.index',        name='forum_home'),
