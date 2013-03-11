@@ -26,6 +26,13 @@ class Category(models.Model):
     def can_view_category(self, user):
         return False
 
+    def touch(self):
+        try:
+            self.save()
+            return True
+        except Exception:
+            return False
+
     def __unicode__(self):
         return self.name
 
@@ -56,12 +63,20 @@ class Forum(models.Model):
     message_count       = models.IntegerField(null=True, blank=True, default=0)
     activate            = models.BooleanField(default=False)
     view_count          = models.IntegerField(default=0)
+    active              = models.BooleanField(default=False)
 
     class Meta():
         ordering = ['position']
         permissions = (
             ('view_forum', 'Can view forum'),
         )
+
+    def touch(self):
+        try:
+            self.save()
+            return True
+        except Exception:
+            return False
 
     def get_allowed_groups(self):
         allowed_groups = []
@@ -111,7 +126,7 @@ class Topic(models.Model):
     reply_count         = models.IntegerField(default=0)
     view_count          = models.IntegerField(default=0)
     locked              = models.BooleanField(default=False)
-    active              = models.BooleanField(default=False)
+    active              = models.BooleanField(default=True)
     created             = models.DateTimeField(null=True, blank=True)
     responded_to        = models.DateTimeField(null=True, blank=True)
     modified            = models.DateTimeField(null=True, blank=True)
@@ -126,13 +141,19 @@ class Topic(models.Model):
             ('view_topic', 'Can view topic'),
         )
 
+    def touch(self):
+        try:
+            self.save()
+            return True
+        except Exception:
+            return False
+
     def get_allowed_groups(self):
         allowed_groups = []
         groups = get_groups_with_perms(self, attach_perms=True)
         for group in groups.keys():
             if "view_topic" in groups[group]:
                 allowed_groups.append(group)
-        print allowed_groups
         return allowed_groups
 
 
