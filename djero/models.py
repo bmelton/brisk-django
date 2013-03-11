@@ -55,6 +55,7 @@ class Forum(models.Model):
     topic_count         = models.IntegerField(null=True, blank=True, default=0)
     message_count       = models.IntegerField(null=True, blank=True, default=0)
     activate            = models.BooleanField(default=False)
+    view_count          = models.IntegerField(default=0)
 
     class Meta():
         ordering = ['position']

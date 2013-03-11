@@ -2,9 +2,10 @@ import logging
 logger = logging.getLogger('djero')
 
 from django.core.signals import request_finished
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, pre_delete
 from django.dispatch import receiver
 from guardian.models import *
+from django.contrib.contenttypes.models import ContentType
 
 import datetime
 from django.dispatch.dispatcher import Signal
@@ -22,9 +23,9 @@ def listen_to_article(sender, instance, created, **kwargs):
         instance.groups.add(registered_users_group.id)
 
 
-@receiver(post_save, sender=BaseObjectPermission)
-def listen_to_bop(sender, instance, created, **kwargs):
-    logger.debug("BaseObjectPermission")
+@receiver(pre_delete, sender=ContentType)
+def listen_to_bop(sender, instance, **kwargs):
+    logger.debug("Deleted ContentType")
 
 @receiver(post_save, sender=UserObjectPermission)
 def listen_to_uop(sender, instance, created, **kwargs):
@@ -32,8 +33,7 @@ def listen_to_uop(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=GroupObjectPermission)
 def listen_to_gop(sender, instance, created, **kwargs):
-    logger.debug(dir(instance))
-    logger.debug("GroupObjectPermission")
+    logger.debug("Added GroupObjectPermission")
 
 
 """

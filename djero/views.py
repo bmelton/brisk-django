@@ -37,6 +37,7 @@ def forum(request, category, forum):
     topics = Topic.objects.filter(forum=forum).order_by('-responded_to')
     page = request.GET.get('page')
     paginator = Paginator(topics, 20)
+    Forum.objects.filter(pk=forum.pk).update(view_count=F('view_count')+1)
 
     try: 
         topics = paginator.page(page)
@@ -62,6 +63,7 @@ def topic(request, category, forum, topic):
 
     page = request.GET.get('page')    
     paginator = Paginator(messageset, 10)
+    Topic.objects.filter(slug=topic).update(view_count=F('view_count')+1)
 
     try:        
         messages = paginator.page(page)    
