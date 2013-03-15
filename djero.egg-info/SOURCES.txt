@@ -7,6 +7,9 @@ djero/forms.py
 djero/managers.py
 djero/models.py
 djero/search_indexes.py
+djero/search_view.py
+djero/signals.py
+djero/sitemap.py
 djero/tests.py
 djero/urls.py
 djero/views.py
@@ -14,7 +17,14 @@ djero.egg-info/PKG-INFO
 djero.egg-info/SOURCES.txt
 djero.egg-info/dependency_links.txt
 djero.egg-info/not-zip-safe
+djero.egg-info/requires.txt
 djero.egg-info/top_level.txt
+djero/migrations/0001_initial.py
+djero/migrations/0002_initial.py
+djero/migrations/0003_auto__del_field_forum_view_count.py
+djero/migrations/0004_auto__add_field_forum_view_count.py
+djero/migrations/0005_auto__add_field_forum_active.py
+djero/migrations/__init__.py
 djero/templates/forum/_nav.html
 djero/templates/forum/base.html
 djero/templates/forum/category.html

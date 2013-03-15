@@ -19,15 +19,10 @@ class TopicIndex(indexes.SearchIndex, indexes.Indexable):
         return "modified"
 
     def prepare_group_access(self, obj):
-        print "PREPARING GROUP ACCESS"
         groups = []
         groups_with_access = obj.get_allowed_groups()
-        print obj.get_allowed_groups()
         for group in groups_with_access:
-            print group.id
             groups.append(group.id)
-        print groups
-        print "FINISHED PREPARING GROUP ACCESS"
         return groups
 
 class MessageIndex(indexes.SearchIndex, indexes.Indexable):

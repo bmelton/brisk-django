@@ -3,7 +3,8 @@ from managers import ForumManager
 from django.contrib.auth.models import User, Group
 from uuslug import uuslug
 import datetime
-from guardian.shortcuts import get_perms, get_groups_with_perms
+from guardian.shortcuts import assign, get_perms, get_groups_with_perms
+everybody_group = Group.objects.get(name='Everybody')
 
 class Category(models.Model):
     groups              = models.ManyToManyField(Group, null=True, blank=True)
@@ -16,7 +17,7 @@ class Category(models.Model):
     active              = models.BooleanField(default=False)
     require_logged_in   = models.BooleanField(default=False)
 
-    class Meta():
+    class Meta:
         ordering = ['position']
         verbose_name_plural = "Categories"
         permissions = (
@@ -65,7 +66,7 @@ class Forum(models.Model):
     view_count          = models.IntegerField(default=0)
     active              = models.BooleanField(default=False)
 
-    class Meta():
+    class Meta:
         ordering = ['position']
         permissions = (
             ('view_forum', 'Can view forum'),
@@ -134,7 +135,7 @@ class Topic(models.Model):
     # all_objects         = models.Manager()
     objects             = models.Manager()
 
-    class Meta():
+    class Meta:
         get_latest_by   = 'created'
         ordering        = ['created']
         permissions = (
@@ -182,7 +183,7 @@ class Message(models.Model):
     modified            = models.DateTimeField(null=True, blank=True)
     active              = models.BooleanField(default=True)
 
-    class Meta():
+    class Meta:
         ordering = ['created']
 
     def __unicode__(self):  

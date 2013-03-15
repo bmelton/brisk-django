@@ -8,11 +8,18 @@ from django.db.models import F
 from actstream import action
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import datetime
-from guardian.shortcuts import get_objects_for_user
+from guardian.shortcuts import get_objects_for_user, get_objects_for_group
+from django.contrib.auth.models import User, Group
+from guardian.utils import get_identity
+
+everybody_group = Group.objects.get(name="Everybody")
 
 def index(request):
     # categories = Category.objects.prefetch_related('forum_set').all().order_by('position')
-    categories = get_objects_for_user(request.user, ['djero.view_category'])
+    if request.user.is_authenticated(): 
+        categories = get_objects_for_user(request.user, ['djero.view_category'], use_groups=True)
+    else:
+        categories = get_objects_for_group(everybody_group, ['djero.view_category'])
     categories.prefetch_related('forum_set').order_by('position')
     return render(request, "forum/index.html", {
         "categories"    : categories,
