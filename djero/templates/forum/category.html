@@ -10,13 +10,13 @@
                 {{ forum.icon }}
             </div>
             <div class="fifteen columns omega">
-                <strong><a href="{% url forum_board_home category.slug forum.slug %}">{{ forum.name }}</a></strong>
+                <strong><a href="{% url 'forum_board_home' category.slug forum.slug %}">{{ forum.name }}</a></strong>
             </div>
             {% if forum.moderator_set.all %}
                 <div class="fifteen columns omega">
                     Moderators:
                     {% for moderator in forum.moderator_set.all %}
-                        <a href="{% url userena_profile_detail moderator.user.username %}">{{ moderator }}</a>
+                        <a href="{% url 'userena_profile_detail' moderator.user.username %}">{{ moderator }}</a>
                     {% endfor %}
                 </div>
             {% endif %}

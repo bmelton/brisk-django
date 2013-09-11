@@ -8,7 +8,7 @@
 {% block forum_content %}
     <div class="large-12 columns row">
         <div class="large-10 columns push-2">
-            <a href="{% url forum_home %}">Forum Home</a> &middot; <a href="{% url forum_board_home topic.forum.category.slug topic.forum.slug %}">{{ topic.forum.name }}</a>
+            <a href="{% url 'forum_home' %}">Forum Home</a> &middot; <a href="{% url 'forum_board_home' topic.forum.category.slug topic.forum.slug %}">{{ topic.forum.name }}</a>
             <h2>{{ topic.title }}</h2>
             <p>{{ topic.message.text }}</p>
             <p>{{ topic.created|naturaltime }}</p>
@@ -29,7 +29,7 @@
     </div>
     <hr />
     <div style="float: right; margin: -35px 10px 0 0;">
-        <a class="small button" href="{% url forum_reply topic.slug %}">Reply</a>
+        <a class="small button" href="{% url 'forum_reply' topic.slug %}">Reply</a>
         <a class="small button" href="blah">Subscribe</a>
     </div>
         {% for message in messages %}

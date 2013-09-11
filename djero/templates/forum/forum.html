@@ -6,14 +6,14 @@
 {% block section_title %}{{ forum.name }}{% endblock %}
 
 {% block forum_content %}
-    <a href="{% url forum_home %}">Forum Home</a>
+    <a href="{% url 'forum_home' %}">Forum Home</a>
     <h2>{{ forum.name }}</h2>
     <hr />
-    <a class="small button" style="margin-top: -35px; float: right;" href="{% url forum_create_topic forum.slug %}">New Topic</a><br />
+    <a class="small button" style="margin-top: -35px; float: right;" href="{% url 'forum_create_topic' forum.slug %}">New Topic</a><br />
     {% for topic in topics %}
         <div class="large-12 columns {% cycle 'even' 'odd' %} topic_row">
             <div class="large-4 columns">
-                <a href="{% url forum_topic_home topic.category.slug topic.forum.slug topic.slug %}"> {{ topic.title }}</a>
+                <a href="{% url 'forum_topic_home' topic.category.slug topic.forum.slug topic.slug %}"> {{ topic.title }}</a>
             </div>
             <div class="large-4 columns">
                 by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a>, {{ topic.created|naturaltime }}
@@ -23,9 +23,9 @@
             </div>
             <div class="large-1 columns">
                 {% if user|is_moderator_of:forum %}
-                    <a href="{% url forum_edit_topic topic.slug %}"><img style="max-width: 20px;" src="{{ STATIC_URL }}images/icons/gear.png" /></a>
+                    <a href="{% url 'forum_edit_topic' topic.slug %}"><img style="max-width: 20px;" src="{{ STATIC_URL }}images/icons/gear.png" /></a>
                 {% elif user.is_superuser %}
-                    <a href="{% url forum_edit_topic topic.slug %}"><img style="max-width: 20px;" src="{{ STATIC_URL }}images/icons/gear.png" /></a>
+                    <a href="{% url 'forum_edit_topic' topic.slug %}"><img style="max-width: 20px;" src="{{ STATIC_URL }}images/icons/gear.png" /></a>
                 {% endif %}
             </div>
         </div>
