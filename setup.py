@@ -113,6 +113,7 @@ setup(
         'Django>=1.4',
         'django-guardian',
         'django-activity-stream',
+        'django-uuslug',
     ],
     classifiers = [
         'Development Status :: 3 - Alpha',
