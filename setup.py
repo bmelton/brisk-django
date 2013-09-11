@@ -114,6 +114,7 @@ setup(
         'django-guardian',
         'django-activity-stream',
         'django-uuslug',
+        'django-tastypie',
     ],
     classifiers = [
         'Development Status :: 3 - Alpha',

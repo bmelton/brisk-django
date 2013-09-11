@@ -1,8 +1,16 @@
 from django.conf.urls import patterns, include, url
-
+from tastypie.api import Api
 from django.contrib import admin
 admin.autodiscover()
 import signals
+
+forum_api = Api(api_name='forum')
+from api import CategoryResource, ForumResource, TopicResource, MessageResource
+
+forum_api.register(CategoryResource())
+forum_api.register(ForumResource())
+forum_api.register(TopicResource())
+forum_api.register(MessageResource())
 
 urlpatterns = patterns('',
     url(r'^$',                                          'djero.views.index',        name='forum_home'),
