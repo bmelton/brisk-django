@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 
 import datetime
 from django.dispatch.dispatcher import Signal
-from voting.models import *
+# from voting.models import *
 from django.contrib.auth.models import User, Group
 everybody_group = Group.objects.get(name='Everybody')
 registered_users_group = Group.objects.get(name='Registered Users')
