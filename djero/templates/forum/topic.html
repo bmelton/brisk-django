@@ -14,7 +14,13 @@
             <p>{{ topic.created|naturaltime }}</p>
         </div>
         <div class="large-2 columns pull-10 center">
-            <div class="hide-for-small"><img class="avatar" src="{{ topic.user.get_profile.get_mugshot_url }}" /><br /></div>
+            <div class="hide-for-small">
+                {% comment %}
+                // If you had an avatar, or userena, uncomment this line and/or edit appropriately.
+                <img class="avatar" src="{{ topic.user.get_profile.get_mugshot_url }}" /><br />
+                {% endcomment %}
+            </div>
+
             <div><a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a></div>
             {% if user.is_authenticated %}
                 {% if user|is_following:topic.user %}
@@ -35,7 +41,9 @@
         {% for message in messages %}
             <div class="large-12 columns" style="margin: 0 0 15px 0; padding: 10px 0 15px 0; border-bottom: 1px solid #ccc;">
                 <div class="large-1 small-3 columns">
+                    {% comment %}
                     <img class="avatar small" src="{{ message.user.get_profile.get_mugshot_url }}" />
+                    {% endcomment %}
                     <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a>
                 </div>
                 <div class="large-11 small-9 columns ">
