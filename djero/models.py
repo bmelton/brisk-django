@@ -121,7 +121,7 @@ class Topic(models.Model):
     slug                = models.CharField(max_length=255, null=True, blank=True)
     sticky              = models.BooleanField(default=False)
     user                = models.ForeignKey(User, related_name='user')
-    last_user           = models.ForeignKey(User, related_name='last_user')
+    last_user           = models.ForeignKey(User, related_name='last_user', null=True, blank=True)
     message             = models.ForeignKey('Message', related_name='message', null=True, blank=True)
     last_message        = models.ForeignKey('Message', related_name='last_message', null=True, blank=True)
     reply_count         = models.IntegerField(default=0)
@@ -165,8 +165,7 @@ class Topic(models.Model):
         if not self.id:
             self.slug = uuslug(self.title, instance=self)
             self.created = datetime.datetime.now()
-        else:
-            self.modified = datetime.datetime.now()
+        self.modified = datetime.datetime.now()
         super(Topic, self).save(*args, **kwargs)
 
     @models.permalink

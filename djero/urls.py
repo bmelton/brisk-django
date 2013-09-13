@@ -5,12 +5,13 @@ admin.autodiscover()
 import signals
 
 forum_api = Api(api_name='forum')
-from api import CategoryResource, ForumResource, TopicResource, MessageResource
+from api import CategoryResource, ForumResource, TopicResource, MessageResource, UserResource
 
 forum_api.register(CategoryResource())
 forum_api.register(ForumResource())
 forum_api.register(TopicResource())
 forum_api.register(MessageResource())
+forum_api.register(UserResource())
 
 urlpatterns = patterns('',
     url(r'^$',                                          'djero.views.index',        name='forum_home'),

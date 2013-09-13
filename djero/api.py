@@ -1,18 +1,43 @@
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie.authorization import DjangoAuthorization
 from tastypie import fields
-from tastypie.authentication import SessionAuthentication
+from tastypie.authentication import Authentication
 from django.conf.urls.defaults import url
 from tastypie.utils import trailing_slash
-
+from django.conf import settings
 from models import Category, Forum, Topic, Message
+from django.contrib.auth.models import User
 
+class UserResource(ModelResource):
+    class Meta:
+        queryset        = User.objects.all()
+        resource_name   = 'auth/user'
+        excludes        = ['email', 'password', 'is_superuser', 'is_staff']
+        authorization   = DjangoAuthorization()
+        authentication  = Authentication()
+
+        filtering = {
+            'id'        : ALL,
+            'username'  : ALL,
+        }
+
+    """
+    def dehydrate(self, bundle):
+        #bundle.data['profile'] = bundle.obj.get_absolute_url()
+        return bundle
+
+    def hydrate(self, bundle):
+        bundle.data.pop('profile', None)
+        del bundle.data['profile']
+        return bundle
+    """
+        
 class CategoryResource(ModelResource):
     class Meta:
-        queryset        = Category.objects.filter(active=True)
+        queryset        = Category.objects.filter(active=True).order_by('position')
         resource_name   = 'category'
         authorization   = DjangoAuthorization()
-        authentication  = SessionAuthentication()
+        authentication  = Authentication()
 
         filtering = {
             'id'        : ALL,
@@ -26,7 +51,7 @@ class ForumResource(ModelResource):
         queryset        = Forum.objects.filter(active=True)
         resource_name   = 'forum'
         authorization   = DjangoAuthorization()
-        authentication  = SessionAuthentication()
+        authentication  = Authentication()
 
         filtering = {
             'id'        : ALL,
@@ -37,11 +62,13 @@ class ForumResource(ModelResource):
 class TopicResource(ModelResource):
     category            = fields.ToOneField(CategoryResource, 'category', full=True)
     forum               = fields.ToOneField(ForumResource, 'forum', full=True)
+    user                = fields.ToOneField(UserResource, 'user', full=True)
+    last_user           = fields.ToOneField(UserResource, 'last_user', full=True)
     class Meta:
         queryset        = Topic.objects.filter(active=True)
         resource_name   = 'topic'
         authorization   = DjangoAuthorization()
-        authentication  = SessionAuthentication()
+        authentication  = Authentication()
 
         filtering = {
             'id'        : ALL,
@@ -50,12 +77,15 @@ class TopicResource(ModelResource):
         }
 
 class MessageResource(ModelResource):
+    category            = fields.ToOneField(CategoryResource, 'category', full=True)
+    forum               = fields.ToOneField(ForumResource, 'forum', full=True)
     topic               = fields.ToOneField(TopicResource, 'topic', full=True)
+    user                = fields.ToOneField(UserResource,  'user',  full=True)
     class Meta:
-        queryset        = Message.objects.filter(active=True)
+        queryset        = Message.objects.filter(active=True).order_by('-modified')
         resource_name   = 'message'
         authorization   = DjangoAuthorization()
-        authentication  = SessionAuthentication()
+        authentication  = Authentication()
 
         filtering = {
             'id'        : ALL,
