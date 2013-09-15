@@ -48,7 +48,7 @@ class CategoryResource(ModelResource):
 class ForumResource(ModelResource):
     category            = fields.ToOneField(CategoryResource, 'category', full=True)
     class Meta:
-        queryset        = Forum.objects.filter(active=True)
+        queryset        = Forum.objects.filter(active=True).order_by('category')
         resource_name   = 'forum'
         authorization   = DjangoAuthorization()
         authentication  = Authentication()
