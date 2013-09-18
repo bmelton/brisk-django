@@ -48,7 +48,7 @@ class CategoryResource(ModelResource):
 class ForumResource(ModelResource):
     category            = fields.ToOneField(CategoryResource, 'category', full=True)
     class Meta:
-        queryset        = Forum.objects.filter(active=True).order_by('category')
+        queryset        = Forum.objects.filter(active=True).order_by('category__position', 'position')
         resource_name   = 'forum'
         authorization   = DjangoAuthorization()
         authentication  = Authentication()
@@ -65,7 +65,7 @@ class TopicResource(ModelResource):
     user                = fields.ToOneField(UserResource, 'user', full=True)
     last_user           = fields.ToOneField(UserResource, 'last_user', full=True)
     class Meta:
-        queryset        = Topic.objects.filter(active=True)
+        queryset        = Topic.objects.filter(active=True).order_by('modified')
         resource_name   = 'topic'
         authorization   = DjangoAuthorization()
         authentication  = Authentication()
@@ -74,6 +74,7 @@ class TopicResource(ModelResource):
             'id'        : ALL,
             'slug'      : ALL,
             'forum'     : ALL_WITH_RELATIONS,
+            'modified'  : ALL,
         }
 
 class MessageResource(ModelResource):
@@ -92,5 +93,6 @@ class MessageResource(ModelResource):
             'category'  : ALL_WITH_RELATIONS,
             'forum'     : ALL_WITH_RELATIONS,
             'topic'     : ALL_WITH_RELATIONS,
+            'modified'  : ALL,
         }
 
