@@ -22,17 +22,11 @@ class UserResource(ModelResource):
             'last_name' : ALL,
         }
 
-    """
     def dehydrate(self, bundle):
         #bundle.data['profile'] = bundle.obj.get_absolute_url()
+        bundle.data['moderator'] = True
         return bundle
 
-    def hydrate(self, bundle):
-        bundle.data.pop('profile', None)
-        del bundle.data['profile']
-        return bundle
-    """
-        
 class CategoryResource(ModelResource):
     class Meta:
         queryset        = Category.objects.filter(active=True).order_by('position')
