@@ -24,7 +24,7 @@ class UserResource(ModelResource):
 
     def dehydrate(self, bundle):
         #bundle.data['profile'] = bundle.obj.get_absolute_url()
-        bundle.data['moderator'] = True
+        bundle.data['moderator'] = bundle.obj.moderator_set.all()
         return bundle
 
 class CategoryResource(ModelResource):
