@@ -19,6 +19,7 @@ class UserResource(ModelResource):
         filtering = {
             'id'        : ALL,
             'username'  : ALL,
+            'last_name' : ALL,
         }
 
     """
