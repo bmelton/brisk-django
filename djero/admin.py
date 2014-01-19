@@ -57,7 +57,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 class TopicAdmin(GuardedModelAdmin):
     model = Topic
-    list_display = ('category', 'forum', 'user', 'message','created','modified',)
+    list_display = ('category', 'forum', 'user', 'title', 'created','modified',)
     list_filter = ('category', 'forum', 'user', )
     search_fields = ['user__username', 'message',]
 

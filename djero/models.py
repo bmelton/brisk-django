@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, Group
 from uuslug import uuslug
 import datetime
 from guardian.shortcuts import assign, get_perms, get_groups_with_perms
+from django.db.models import F
 everybody_group = Group.objects.get(name='Everybody')
 
 class Category(models.Model):
@@ -173,11 +174,11 @@ class Topic(models.Model):
         return ('forum_topic_home', [self.category.slug, self.forum.slug, self.slug])
 
 class Message(models.Model):
-    category            = models.ForeignKey(Category)
+    category            = models.ForeignKey(Category, null=True)
     forum               = models.ForeignKey(Forum)
-    topic               = models.ForeignKey(Topic, related_name='topic_messages')
-    user                = models.ForeignKey(User)
-    text                = models.TextField()                
+    topic               = models.ForeignKey(Topic, related_name='topic_messages', null=True)
+    user                = models.ForeignKey(User, null=True)
+    text                = models.TextField(null=True)                
     created             = models.DateTimeField(null=True, blank=True)
     modified            = models.DateTimeField(null=True, blank=True)
     active              = models.BooleanField(default=True)
@@ -192,8 +193,12 @@ class Message(models.Model):
         if not self.id:
             # self.slug = uuslug(self.title, instance=self)
             self.created = datetime.datetime.now()
+            self.topic.reply_count = self.topic.reply_count + 1
+            self.topic.responded_to = datetime.datetime.now()
+            self.topic.save()
         else:
             self.modified = datetime.datetime.now()
+            self.topic.responded_to = datetime.datetime.now()
         super(Message, self).save(*args, **kwargs)
 
     @models.permalink

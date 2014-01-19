@@ -1,0 +1,5 @@
+Django>=1.4
+django-guardian
+django-activity-stream
+django-uuslug
+django-tastypie

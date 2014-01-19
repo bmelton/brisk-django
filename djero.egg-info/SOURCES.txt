@@ -3,6 +3,7 @@ README.txt
 setup.py
 djero/__init__.py
 djero/admin.py
+djero/api.py
 djero/forms.py
 djero/managers.py
 djero/models.py

@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: djero
+Version: 0.0a18
+Summary: Djero is a dumb Django forum app that sucks.
+Home-page: http://github.com/bmelton/djero/
+Author: Barry Melton
+Author-email: barry.melton@gmail.com
+License: Creative Commons Non-Commercial, 3.0
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP

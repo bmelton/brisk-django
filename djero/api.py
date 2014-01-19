@@ -65,7 +65,7 @@ class TopicResource(ModelResource):
     user                = fields.ToOneField(UserResource, 'user', full=True)
     last_user           = fields.ToOneField(UserResource, 'last_user', full=True)
     class Meta:
-        queryset        = Topic.objects.filter(active=True).order_by('modified')
+        queryset        = Topic.objects.filter(active=True).order_by('-modified')
         resource_name   = 'topic'
         authorization   = DjangoAuthorization()
         authentication  = Authentication()
@@ -76,6 +76,10 @@ class TopicResource(ModelResource):
             'forum'     : ALL_WITH_RELATIONS,
             'modified'  : ALL,
         }
+
+    def dehydrate(self, bundle):
+        bundle.data['avatar'] = "/static/img/avatars/hobbes.png";
+        return bundle
 
 class MessageResource(ModelResource):
     category            = fields.ToOneField(CategoryResource, 'category', full=True)

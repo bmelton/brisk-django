@@ -1,0 +1,7 @@
+djero.egg-info/PKG-INFO
+djero.egg-info/SOURCES.txt
+djero.egg-info/dependency_links.txt
+djero.egg-info/not-zip-safe
+djero.egg-info/top_level.txt
+templatetags/__init__.py
+templatetags/forum_tags.py
